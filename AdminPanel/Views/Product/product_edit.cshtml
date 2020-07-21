@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewData["Title"] = "პროდუქტის რედაქტირება";
+}
+@model AdminPanel.Models.products
+<h1>@ViewData["Title"]</h1>
+@if (!String.IsNullOrEmpty(ViewBag.editMessage))
+{
+    <div style="text-align:center; color:green; margin:20px;">
+        <h3> @ViewBag.editMessage </h3>
+    </div>
+}
+@if (Model != null)
+{
+    <div style="margin-top:50px;">
+        <form action="/Product/product_edit" method="post">
+            <div class="form-group" hidden>
+                <span>
+                    ძველი ბარკოდი
+                </span>
+                <input type="text" name="barcode" value="@Model.barcode" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <span>
+                    ბარკოდი
+                </span>
+                <input type="text" name="new_barcode" value="@Model.barcode" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <span>
+                    სახელი
+                </span>
+                <input type="text" name="name" value="@Model.name" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <span>
+                    ფასი
+                </span>
+                <input type="text" name="price" value="@Model.price" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <span>
+                    ერთეული
+                </span>
+                <input type="text" name="measurement" value="@Model.measurement" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <span>
+                    რაოდენობა
+                </span>
+                <input type="text" name="quantity" value="@Model.quantity" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" name="sbm" value="რედაქტირება" />
+                <a href="/Product/index" style="float:right">უკან დაბრუნება</a>
+            </div>
+        </form>
+    </div>
+}

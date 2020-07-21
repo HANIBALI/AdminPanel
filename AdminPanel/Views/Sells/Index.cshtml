@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "გაყიდვები";
+}
+@model IEnumerable<AdminPanel.Models.Sells>
+<h1>@ViewData["Title"]</h1>
+<head>
+    <title>Registration form</title>
+    <link href="~/css/StyleForPrivacy.css" rel="stylesheet">
+</head>
+<body>
+    <div>
+       
+        <div>
+            @if (Model != null)
+            {
+                <table border="1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                მოლარე
+                            </th>
+                            <th>
+                                პროდუქტის სახელი
+                            </th>
+                            <th>
+                                გაყიდვის დრო
+                            </th>
+                            <th>
+                                რაოდენობა
+                            </th>
+                            <th>
+                                თანხა
+                            </th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Cashier</td>
+                                <td>@item.Product</td>
+                                <td>@item.SaleTime</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.amount</td>
+                               
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+
+            }
+        </div>
+    </div>
+</body>
+

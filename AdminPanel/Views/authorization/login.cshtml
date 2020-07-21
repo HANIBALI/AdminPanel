@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "login";
+}
+
+<head>
+    <title>Registration form</title>
+    <link href="~/css/StyleForHome.css" rel="stylesheet">
+</head>
+
+<body>
+    @if (ViewBag.login_text == "pin or password is incorect!")
+    {
+        <script>
+        window.alert("@ViewBag.login_text");
+        </script>
+    }
+    <form id="form1" action="/authorization/login" method="post">
+        <section>
+            <div class="container" id="MiddleContainer">
+                <span id="TitleOfRegistration">
+                    ავტორიზაცია
+                </span>
+                <div class="registration">
+                    <div>
+                        <span>
+                            პირადი ნომერი
+                        </span>
+                        <input class="UserAndPass" type="text" name="pin" value="" />
+                    </div>
+                    <div>
+                        <span>
+                            პაროლი
+                        </span>
+                        <input class="UserAndPass" type="password" name="password" rt value="" />
+                    </div>
+                    <div>
+                        <input class="UserAndPass" id="btn" type="submit" name="login" value="შესვლა" />
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+</body>
+
+
+

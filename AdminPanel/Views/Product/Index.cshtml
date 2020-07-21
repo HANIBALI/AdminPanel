@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "პროდუქტები";
+}
+@model IEnumerable<AdminPanel.Models.products>
+<h1>@ViewData["Title"]</h1>
+<head>
+    <title>Registration form</title>
+    <link href="~/css/StyleForPrivacy.css" rel="stylesheet">
+</head>
+<body>
+    <div>
+        <div style="float:right; padding-bottom:20px;">
+            <a href="product_add">დამატება</a>
+        </div>
+        <div>
+            @if (Model != null)
+            {
+                <table border="1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                ბარკოდი
+                            </th>
+                            <th>
+                                სახელი
+                            </th>
+                            <th>
+                                რაოდენობა
+                            </th>
+                            <th>
+                                ერთეული
+                            </th>
+                            <th>
+                                ფასი
+                            </th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.barcode</td>
+                                <td>@item.name</td>
+                                <td>@item.quantity</td>
+                                <td>@item.measurement</td>
+                                <td>@item.price</td>
+                                <td><a href="product_edit?barcode=@item.barcode">რედაქტირება</a></td>
+                                <td><a href="?barcode=@item.barcode">წაშლა</a></td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+
+            }
+        </div>
+    </div>
+</body>

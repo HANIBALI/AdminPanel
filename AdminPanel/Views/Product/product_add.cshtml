@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "პროდუქტის დამატება";
+}
+<h1>@ViewData["Title"]</h1>
+
+@if (!String.IsNullOrEmpty(ViewBag.addMessage))
+{
+    <div style="text-align:center; color:green; margin:20px;">
+        <h3> @ViewBag.addMessage </h3>
+    </div>
+}
+
+<div style="margin-top:50px;">
+    <form action="/Product/product_add" method="post">
+        <div class="form-group">
+            <span>
+                ბარკოდი
+            </span>
+            <input type="text" name="barcode" value="" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <span>
+                სახელი
+            </span>
+            <input type="text" name="name" value="" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <span>
+                ფასი
+            </span>
+            <input type="text" name="price" value="" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <span>
+                ერთეული
+            </span>
+            <input type="text" name="measurement" value="" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <span>
+                რაოდენობა
+            </span>
+            <input type="text" name="quantity" value="" class="form-control" />
+        </div>
+        <div class="form-group">
+            <input type="submit" name="sbm" value="დამატება" />
+            <a href="/Product/index" style="float:right">უკან დაბრუნება</a>
+        </div>
+    </form>
+</div>
