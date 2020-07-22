@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AdminPanel.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -28,38 +29,45 @@ namespace AdminPanel.Controllers
         {
             try
             {
-                if (barcode == null)
+                if (HttpContext.Session.GetString("user") == "admin")
                 {
-                    var client2 = new RestClient("https://localhost:44303/Product/SelectProduct");
-                    client2.Timeout = -1;
-                    var request2 = new RestRequest(Method.POST);
-                    IRestResponse response2 = client2.Execute(request2);
-                    var result2 = JsonConvert.DeserializeObject<List<products>>(response2.Content);
-                    return View(result2);
+                    if (barcode == null)
+                    {
+                        var client2 = new RestClient("https://localhost:44303/Product/SelectProduct");
+                        client2.Timeout = -1;
+                        var request2 = new RestRequest(Method.POST);
+                        IRestResponse response2 = client2.Execute(request2);
+                        var result2 = JsonConvert.DeserializeObject<List<products>>(response2.Content);
+                        return View(result2);
+                    }
+                    //პროდუქტის წაშლა
+                    else
+                    {
+                        var client = new RestClient("https://localhost:44303/Product/product_remove");
+                        client.Timeout = -1;
+                        var request = new RestRequest(Method.POST);
+                        request.AddHeader("Content-Type", "text/plain");
+                        request.AddParameter("text/plain", "[\r\n    {\r\n        \"barcode\": \"" + barcode + "\"\r\n    }\r\n]", ParameterType.RequestBody);
+                        IRestResponse response = client.Execute(request);
+
+                        if (response.StatusCode != HttpStatusCode.OK)
+                        {
+                            var errorResult = JObject.Parse(response.Content);
+                            string errorText = errorResult.GetValue("message").ToString();
+                            throw new Exception(errorText);
+                        }
+                        //თავიდან ჩატვირთვა
+                        var client1 = new RestClient("https://localhost:44303/Product/SelectProduct");
+                        client1.Timeout = -1;
+                        var request1 = new RestRequest(Method.POST);
+                        IRestResponse response1 = client1.Execute(request1);
+                        var result = JsonConvert.DeserializeObject<List<products>>(response1.Content);
+                        return View(result);
+                    }
                 }
-                //პროდუქტის წაშლა
                 else
                 {
-                    var client = new RestClient("https://localhost:44303/Product/product_remove");
-                    client.Timeout = -1;
-                    var request = new RestRequest(Method.POST);
-                    request.AddHeader("Content-Type", "text/plain");
-                    request.AddParameter("text/plain", "[\r\n    {\r\n        \"barcode\": \"" + barcode + "\"\r\n    }\r\n]", ParameterType.RequestBody);
-                    IRestResponse response = client.Execute(request);
-
-                    if (response.StatusCode != HttpStatusCode.OK)
-                    {
-                        var errorResult = JObject.Parse(response.Content);
-                        string errorText = errorResult.GetValue("message").ToString();
-                        throw new Exception(errorText);
-                    }
-                    //თავიდან ჩატვირთვა
-                    var client1 = new RestClient("https://localhost:44303/Product/SelectProduct");
-                    client1.Timeout = -1;
-                    var request1 = new RestRequest(Method.POST);
-                    IRestResponse response1 = client1.Execute(request1);
-                    var result = JsonConvert.DeserializeObject<List<products>>(response1.Content);
-                    return View(result);
+                    return RedirectToAction("login", "authorization");
                 }
                
             }
@@ -95,9 +103,16 @@ namespace AdminPanel.Controllers
         {
             try
             {
+                if (HttpContext.Session.GetString("user") == "admin")
+                {
 
-                var product = get_product_info_by_barcode(barcode);
-                return View(product);
+                    var product = get_product_info_by_barcode(barcode);
+                    return View(product);
+                }
+                else
+                {
+                    return RedirectToAction("login", "authorization");
+                }
             }
             catch (Exception ex)
             {
@@ -112,31 +127,38 @@ namespace AdminPanel.Controllers
         {
             try
             {
-                var client = new RestClient("https://localhost:44303/Product/product_update");
-                client.Timeout = -1;
-                var request = new RestRequest(Method.POST);
-                request.AlwaysMultipartFormData = true;
-                request.AddParameter("barcode", barcode);
-                request.AddParameter("new_barcode", new_barcode);
-                request.AddParameter("name", name);
-                request.AddParameter("quantity", quantity);
-                request.AddParameter("measurement", measurement);
-                request.AddParameter("price", price);
-                IRestResponse response = client.Execute(request);
-                //სტატუსის შემოწმება
-                if (response.StatusCode != HttpStatusCode.OK)
+                if (HttpContext.Session.GetString("user") == "admin")
                 {
-                    var errorResult = JObject.Parse(response.Content);
-                    string errorText = errorResult.GetValue("message").ToString();
-                    throw new Exception(errorText);
+                    var client = new RestClient("https://localhost:44303/Product/product_update");
+                    client.Timeout = -1;
+                    var request = new RestRequest(Method.POST);
+                    request.AlwaysMultipartFormData = true;
+                    request.AddParameter("barcode", barcode);
+                    request.AddParameter("new_barcode", new_barcode);
+                    request.AddParameter("name", name);
+                    request.AddParameter("quantity", quantity);
+                    request.AddParameter("measurement", measurement);
+                    request.AddParameter("price", price);
+                    IRestResponse response = client.Execute(request);
+                    //სტატუსის შემოწმება
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        var errorResult = JObject.Parse(response.Content);
+                        string errorText = errorResult.GetValue("message").ToString();
+                        throw new Exception(errorText);
+                    }
+                    else
+                    {
+                        var result_json = JObject.Parse(response.Content);
+                        string result_text = result_json.GetValue("message").ToString();
+                        ViewBag.editMessage = result_text;
+                        var product = get_product_info_by_barcode(new_barcode);
+                        return View(product);
+                    }
                 }
                 else
                 {
-                    var result_json = JObject.Parse(response.Content);
-                    string result_text = result_json.GetValue("message").ToString();
-                    ViewBag.editMessage = result_text;
-                    var product = get_product_info_by_barcode(new_barcode);
-                    return View(product);
+                    return RedirectToAction("login", "authorization");
                 }
             }
             catch (Exception ex)
@@ -152,7 +174,14 @@ namespace AdminPanel.Controllers
         {
             try
             {
-                return View();
+                if (HttpContext.Session.GetString("user") == "admin")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("login", "authorization");
+                }
             }
             catch (Exception ex)
             {
@@ -167,30 +196,37 @@ namespace AdminPanel.Controllers
         {
             try
             {
-                var client = new RestClient("https://localhost:44303/Product/product_add");
-                client.Timeout = -1;
-                var request = new RestRequest(Method.POST);
-                request.AddHeader("Content-Type", "text/plain");
-                request.AddParameter("text/plain", "[\r\n    {\r\n        " +
-                    "\"barcode\":\""+barcode+"\",\r\n        " +
-                    "\"name\":\"" + name + "\",\r\n        " +
-                    "\"price\":\"" + price + "\",\r\n        " +
-                    "\"measurement\":\"" + measurement + "\",\r\n        " +
-                    "\"quantity\":\"" + quantity + "\"\r\n    }\r\n]", ParameterType.RequestBody);
-                IRestResponse response = client.Execute(request);
-                //სტატუსის შემოწმება
-                if (response.StatusCode != HttpStatusCode.OK)
+                if (HttpContext.Session.GetString("user") == "admin")
                 {
-                    var errorResult = JObject.Parse(response.Content);
-                    string errorText = errorResult.GetValue("message").ToString();
-                    throw new Exception(errorText);
+                    var client = new RestClient("https://localhost:44303/Product/product_add");
+                    client.Timeout = -1;
+                    var request = new RestRequest(Method.POST);
+                    request.AddHeader("Content-Type", "text/plain");
+                    request.AddParameter("text/plain", "[\r\n    {\r\n        " +
+                        "\"barcode\":\"" + barcode + "\",\r\n        " +
+                        "\"name\":\"" + name + "\",\r\n        " +
+                        "\"price\":\"" + price + "\",\r\n        " +
+                        "\"measurement\":\"" + measurement + "\",\r\n        " +
+                        "\"quantity\":\"" + quantity + "\"\r\n    }\r\n]", ParameterType.RequestBody);
+                    IRestResponse response = client.Execute(request);
+                    //სტატუსის შემოწმება
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        var errorResult = JObject.Parse(response.Content);
+                        string errorText = errorResult.GetValue("message").ToString();
+                        throw new Exception(errorText);
+                    }
+                    else
+                    {
+                        var result_json = JObject.Parse(response.Content);
+                        string result_text = result_json.GetValue("message").ToString();
+                        ViewBag.addMessage = result_text;
+                        return View();
+                    }
                 }
                 else
                 {
-                    var result_json = JObject.Parse(response.Content);
-                    string result_text = result_json.GetValue("message").ToString();
-                    ViewBag.addMessage = result_text;
-                    return View();
+                    return RedirectToAction("login", "authorization");
                 }
             }
             catch (Exception ex)

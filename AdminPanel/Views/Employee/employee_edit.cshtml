@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewData["Title"] = "თანამშრომლის რედაქტირება";
+}
+@model AdminPanel.Models.Employees
+<h1>@ViewData["Title"]</h1>
+@if (!String.IsNullOrEmpty(ViewBag.editMessage))
+{
+    <div style="text-align:center; color:green; margin:20px;">
+        <h3> @ViewBag.editMessage </h3>
+    </div>
+}
+
+@if (Model != null)
+{
+    <div style="margin-top:50px;">
+        <form action="/Employee/employee_edit" method="post">
+            <div class="form-group" hidden>
+                <span>
+                    ძველი პირადი ნომერი
+                </span>
+                <input type="text" name="pin" value="@Model.Pin" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <span>
+                    სახელი
+                </span>
+                <input type="text" name="firstname" value="@Model.Firstname" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <span>
+                    გვარი
+                </span>
+                <input type="text" name="lastname" value="@Model.Lastname" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <span>
+                    სქესი
+                </span>
+                <input type="text" name="gender" value="@Model.Gender" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <span>
+                    პირადი ნომერი
+                </span>
+                <input type="text" name="new_pin" value="@Model.Pin" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <span>
+                    პაროლი
+                </span>
+                <input type="text" name="password" value="@Model.Password" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <span>
+                    დაბადების თარიღი
+                </span>
+                <input type="date" name="BirthDate" class="form-control" value="@Model.BirthDate">
+            </div>
+            <div class="form-group">
+                <input type="submit" name="sbm" value="რედაქტირება" />
+                <a href="/Employees/Index" style="float:right">უკან დაბრუნება</a>
+            </div>
+        </form>
+    </div>
+}

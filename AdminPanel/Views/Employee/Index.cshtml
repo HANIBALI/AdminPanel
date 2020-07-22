@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "თანამშრომლები";
+}
+@model IEnumerable<AdminPanel.Models.Employees>
+<h1>@ViewData["Title"]</h1>
+<head>
+    <title>Registration form</title>
+    <link href="~/css/StyleForPrivacy.css" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <div style="float:right; padding-bottom:20px;">
+            <a href="employee_add">დამატება</a>
+        </div>
+        <div>
+            @if (Model != null)
+            {
+                <table border="1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                სახელი
+                            </th>
+                            <th>
+                                გვარი
+                            </th>
+                            <th>
+                                სქესი
+                            </th>
+                            <th>
+                                პირადი ნომერი
+                            </th>
+                            <th>
+                                პაროლი
+                            </th>
+                            <th>
+                                დაბადების თარიღი
+                            </th>
+                            <th>
+                                დაქირავების თარიღი
+                            </th>
+                            <th>
+                                თანამდებობა
+                            </th>
+                            <th>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@item.Firstname</td>
+                            <td>@item.Lastname</td>
+                            <td>@item.Gender</td>
+                            <td>@item.Pin</td>
+                            <td>@item.Password</td>
+                            <td>@item.BirthDate</td>
+                            <td>@item.HireDate</td>
+                            <td>@item.Position</td>                           
+                            <td><a href="employee_edit?Pin=@item.Pin">რედაქტირება</a></td>
+                            <td><a href="?Pin=@item.Pin">წაშლა</a></td>
+                        </tr>
+                        }
+                    </tbody>
+
+                </table>
+
+            }
+        </div>
+    </div>
+</body>

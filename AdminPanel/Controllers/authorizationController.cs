@@ -46,5 +46,10 @@ namespace AdminPanel.Controllers
             
 
         }
+        public IActionResult logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("login", "authorization");
+        }
     }
 }

@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "თანამშრომლის დამატება";
+}
+<h1>@ViewData["Title"]</h1>
+
+@if (!String.IsNullOrEmpty(ViewBag.addMessage))
+{
+    <div style="text-align:center; color:green; margin:20px;">
+        <h3> @ViewBag.addMessage </h3>
+    </div>
+}
+
+
+<div style="margin-top:50px;">
+    <form action="/Employee/employee_add" method="post">
+        <div class="form-group">
+            <span>
+                სახელი
+            </span>
+            <input type="text" name="Firstname" value="" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <span>
+                გვარი
+            </span>
+            <input type="text" name="Lastname" value="" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <span>
+                სქესი
+            </span>
+            <select name="Gender" class="form-control">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <span>
+                პირადი ნომერი
+            </span>
+            <input type="text" name="Pin" value="" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <span>
+                პაროლი
+            </span>
+            <input type="text" name="Password" value="" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <span>
+                დაბადების თარიღი
+            </span>
+            <input type="date"  name="BirthDate" class="form-control">
+        </div>
+
+        
+
+
+        <div class="form-group">
+            <input type="submit" name="sbm" value="დამატება" />
+            <a href="/Employee/index" style="float:right">უკან დაბრუნება</a>
+        </div>
+    </form>
+</div>
