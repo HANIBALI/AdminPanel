@@ -25,7 +25,7 @@ namespace AdminPanel.Controllers
         public  IActionResult login(string pin, string password)
         {
             
-            var client = new RestClient("https://localhost:44303/Product/admin_authorization?pin="+pin+"&password="+password);
+            var client = new RestClient("https://possystem.conveyor.cloud/Product/admin_authorization?pin="+pin+"&password="+password);
             client.Timeout = -1;
             var request = new RestRequest(Method.POST);
             request.AlwaysMultipartFormData = true;

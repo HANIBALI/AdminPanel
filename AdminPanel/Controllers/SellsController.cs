@@ -16,7 +16,7 @@ namespace AdminPanel.Controllers
         {
             if (HttpContext.Session.GetString("user") == "admin")
             {
-                var client = new RestClient("https://localhost:44303/Product/SelectFromSales");
+                var client = new RestClient("https://possystem.conveyor.cloud/Product/SelectFromSales");
                 client.Timeout = -1;
                 var request = new RestRequest(Method.POST);
                 IRestResponse response = client.Execute(request);

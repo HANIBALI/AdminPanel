@@ -17,7 +17,7 @@ namespace AdminPanel.Controllers
         //[HttpGet]
         //public IActionResult Index()
         //{
-        //    var client = new RestClient("https://localhost:44303/Product/SelectProduct");
+        //    var client = new RestClient("https://possystem.conveyor.cloud/Product/SelectProduct");
         //    client.Timeout = -1;
         //    var request = new RestRequest(Method.POST);
         //    IRestResponse response = client.Execute(request);
@@ -33,7 +33,7 @@ namespace AdminPanel.Controllers
                 {
                     if (barcode == null)
                     {
-                        var client2 = new RestClient("https://localhost:44303/Product/SelectProduct");
+                        var client2 = new RestClient("https://possystem.conveyor.cloud/Product/SelectProduct");
                         client2.Timeout = -1;
                         var request2 = new RestRequest(Method.POST);
                         IRestResponse response2 = client2.Execute(request2);
@@ -43,7 +43,7 @@ namespace AdminPanel.Controllers
                     //პროდუქტის წაშლა
                     else
                     {
-                        var client = new RestClient("https://localhost:44303/Product/product_remove");
+                        var client = new RestClient("https://possystem.conveyor.cloud/Product/product_remove");
                         client.Timeout = -1;
                         var request = new RestRequest(Method.POST);
                         request.AddHeader("Content-Type", "text/plain");
@@ -57,7 +57,7 @@ namespace AdminPanel.Controllers
                             throw new Exception(errorText);
                         }
                         //თავიდან ჩატვირთვა
-                        var client1 = new RestClient("https://localhost:44303/Product/SelectProduct");
+                        var client1 = new RestClient("https://possystem.conveyor.cloud/Product/SelectProduct");
                         client1.Timeout = -1;
                         var request1 = new RestRequest(Method.POST);
                         IRestResponse response1 = client1.Execute(request1);
@@ -80,7 +80,7 @@ namespace AdminPanel.Controllers
 
         public products get_product_info_by_barcode(string barcode)
         {
-            var client = new RestClient("https://localhost:44303/Product/GetByBarcodeForAdmin");
+            var client = new RestClient("https://possystem.conveyor.cloud/Product/GetByBarcodeForAdmin");
             client.Timeout = -1;
             var request = new RestRequest(Method.POST);
             request.AlwaysMultipartFormData = true;
@@ -129,7 +129,7 @@ namespace AdminPanel.Controllers
             {
                 if (HttpContext.Session.GetString("user") == "admin")
                 {
-                    var client = new RestClient("https://localhost:44303/Product/product_update");
+                    var client = new RestClient("https://possystem.conveyor.cloud/Product/product_update");
                     client.Timeout = -1;
                     var request = new RestRequest(Method.POST);
                     request.AlwaysMultipartFormData = true;
@@ -198,7 +198,7 @@ namespace AdminPanel.Controllers
             {
                 if (HttpContext.Session.GetString("user") == "admin")
                 {
-                    var client = new RestClient("https://localhost:44303/Product/product_add");
+                    var client = new RestClient("https://possystem.conveyor.cloud/Product/product_add");
                     client.Timeout = -1;
                     var request = new RestRequest(Method.POST);
                     request.AddHeader("Content-Type", "text/plain");

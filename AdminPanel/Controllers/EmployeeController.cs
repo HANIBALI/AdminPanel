@@ -28,7 +28,7 @@ namespace AdminPanel.Controllers
                     {
 
 
-                        var client = new RestClient("https://localhost:44303/Product/employee_select");
+                        var client = new RestClient("https://possystem.conveyor.cloud/Product/employee_select");
                         client.Timeout = -1;
                         var request = new RestRequest(Method.POST);
                         IRestResponse response = client.Execute(request);
@@ -37,7 +37,7 @@ namespace AdminPanel.Controllers
                     }
                     else
                     {
-                        var client = new RestClient("https://localhost:44303/Product/employee_remove");
+                        var client = new RestClient("https://possystem.conveyor.cloud/Product/employee_remove");
                         client.Timeout = -1;
                         var request = new RestRequest(Method.POST);
                         request.AlwaysMultipartFormData = true;
@@ -54,7 +54,7 @@ namespace AdminPanel.Controllers
                         }
 
 
-                        var client1 = new RestClient("https://localhost:44303/Product/employee_select");
+                        var client1 = new RestClient("https://possystem.conveyor.cloud/Product/employee_select");
                         client1.Timeout = -1;
                         var request1 = new RestRequest(Method.POST);
                         IRestResponse response1 = client1.Execute(request1);
@@ -106,7 +106,7 @@ namespace AdminPanel.Controllers
                 var BirthDate1 = BirthDate.ToString("yyyy/MM/dd");
                 if (HttpContext.Session.GetString("user") == "admin")
                 {
-                    var client = new RestClient("https://localhost:44303/Product/Cashier_add");
+                    var client = new RestClient("https://possystem.conveyor.cloud/Product/Cashier_add");
                     client.Timeout = -1;
                     var request = new RestRequest(Method.POST);
                     request.AddHeader("Content-Type", "text/plain");
@@ -155,7 +155,7 @@ namespace AdminPanel.Controllers
             {
                 if (HttpContext.Session.GetString("user") == "admin")
                 {
-                    var client = new RestClient("https://localhost:44303/Product/employee_select_by_pin");
+                    var client = new RestClient("https://possystem.conveyor.cloud/Product/employee_select_by_pin");
                     client.Timeout = -1;
                     var request = new RestRequest(Method.POST);
                     request.AlwaysMultipartFormData = true;
@@ -192,7 +192,7 @@ namespace AdminPanel.Controllers
             {
                 if (HttpContext.Session.GetString("user") == "admin")
                 {
-                    var client = new RestClient("https://localhost:44303/Product/employee_update");
+                    var client = new RestClient("https://possystem.conveyor.cloud/Product/employee_update");
                     client.Timeout = -1;
                     var request = new RestRequest(Method.POST);
                     request.AlwaysMultipartFormData = true;
@@ -222,7 +222,7 @@ namespace AdminPanel.Controllers
 
 
 
-                        var client1 = new RestClient("https://localhost:44303/Product/employee_select_by_pin");
+                        var client1 = new RestClient("https://possystem.conveyor.cloud/Product/employee_select_by_pin");
                         client1.Timeout = -1;
                         var request1 = new RestRequest(Method.POST);
                         request1.AlwaysMultipartFormData = true;

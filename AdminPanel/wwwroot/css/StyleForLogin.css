@@ -1,0 +1,84 @@
+﻿body {
+}
+#MiddleContainer {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../images/108050.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    text-align: center;
+}
+
+    #MiddleContainer .registration {
+        margin-top: 20%;
+    }
+
+#TitleOfRegistration {
+    font-size: 35px;
+    margin-top: 5%;
+}
+
+.UserAndPass {
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    width: 20%;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2C3E50;
+    font-size: 13px;
+    opacity: 0.8;
+    font-family: Arial;
+}
+
+#MiddleContainer .btn {
+    top: 60%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #f1f1f1;
+    color: black;
+    font-size: 16px;
+    padding: 20px 30px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    width: 20%;
+}
+
+span {
+    font-size: 25px;
+    font-family: Arial;
+    color: black;
+    display: block;
+}
+
+#MiddleContainer .btn:hover {
+    background-color: black;
+    color: white;
+}
+
+body section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    visibility: hidden;
+}
